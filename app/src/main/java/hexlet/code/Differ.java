@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Differ {
 
@@ -16,29 +15,28 @@ public class Differ {
         Map<String, Object> mapJson2 = (Map) mapper.readValue(path2, Object.class);
 
         Set<String> twoMapsKeySet = new HashSet<>();
-        for (String k : mapJson1.keySet()) {
-            twoMapsKeySet.add(k);
-        }
-        for (String k : mapJson2.keySet()) {
-            twoMapsKeySet.add(k);
-        }
+        twoMapsKeySet.addAll(mapJson1.keySet());
+        twoMapsKeySet.addAll(mapJson2.keySet());
+        List<String> keysList = twoMapsKeySet.stream()
+                .sorted()
+                .toList();
 
         StringBuilder result = new StringBuilder();
-        result.append("{/n");
+        result.append("\n{\n");
 
-        for (String key : twoMapsKeySet) {
+        for (String key : keysList) {
             if (mapJson1.containsKey(key) && mapJson2.containsKey(key)) {
                 if (mapJson1.get(key).equals(mapJson2.get(key))) {
-                    result.append(key + ": " + mapJson1.get(key) + "/n");
+                    result.append("  " + key + ": " + mapJson1.get(key) + "\n");
                 } else {
-                    result.append("- " + key + ": " + mapJson1.get(key) + "/n"
-                            + "+ " + key + ": " + mapJson1.get(key) + "/n");
+                    result.append("- " + key + ": " + mapJson1.get(key) + "\n"
+                            + "+ " + key + ": " + mapJson2.get(key) + "\n");
                 }
             } else {
                 if (mapJson1.containsKey(key)) {
-                    result.append("- " + key + ": " + mapJson1.get(key) + "/n");
+                    result.append("- " + key + ": " + mapJson1.get(key) + "\n");
                 } else {
-                    result.append("+ " + key + ": " + mapJson1.get(key) + "/n");
+                    result.append("+ " + key + ": " + mapJson2.get(key) + "\n");
                 }
             }
         }

@@ -33,6 +33,7 @@ public class App implements Callable {
 
     @Override
     public Object call() throws IOException {
+        System.out.println(Differ.generate(filepath1, filepath2));
         return Differ.generate(filepath1, filepath2);
     }
 }
