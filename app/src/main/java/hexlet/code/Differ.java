@@ -1,0 +1,50 @@
+package hexlet.code;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+public class Differ {
+
+    public static String generate(File path1, File path2) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> mapJson1 = (Map) mapper.readValue(path1, Object.class);
+        Map<String, Object> mapJson2 = (Map) mapper.readValue(path2, Object.class);
+
+        Set<String> twoMapsKeySet = new HashSet<>();
+        for (String k : mapJson1.keySet()) {
+            twoMapsKeySet.add(k);
+        }
+        for (String k : mapJson2.keySet()) {
+            twoMapsKeySet.add(k);
+        }
+
+        StringBuilder result = new StringBuilder();
+        result.append("{/n");
+
+        for (String key : twoMapsKeySet) {
+            if (mapJson1.containsKey(key) && mapJson2.containsKey(key)) {
+                if (mapJson1.get(key).equals(mapJson2.get(key))) {
+                    result.append(key + ": " + mapJson1.get(key) + "/n");
+                } else {
+                    result.append("- " + key + ": " + mapJson1.get(key) + "/n"
+                            + "+ " + key + ": " + mapJson1.get(key) + "/n");
+                }
+            } else {
+                if (mapJson1.containsKey(key)) {
+                    result.append("- " + key + ": " + mapJson1.get(key) + "/n");
+                } else {
+                    result.append("+ " + key + ": " + mapJson1.get(key) + "/n");
+                }
+            }
+        }
+
+        result.append("}");
+
+        return result.toString();
+    }
+}

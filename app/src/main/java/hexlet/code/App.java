@@ -6,6 +6,8 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.Callable;
 
 @Command(
         name = "gendiff",
@@ -14,7 +16,7 @@ import java.io.File;
         description = "Compares two configuration files and shows a difference."
 )
 
-public class App implements Runnable {
+public class App implements Callable {
 
     @Parameters(index = "0", description = "path to first file", defaultValue = "/etc/hosts")
     private File filepath1 = new File("/etc/hosts");
@@ -30,6 +32,7 @@ public class App implements Runnable {
     }
 
     @Override
-    public void run() {}
-
+    public Object call() throws IOException {
+        return Differ.generate(filepath1, filepath2);
+    }
 }
