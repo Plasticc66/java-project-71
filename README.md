@@ -1,5 +1,5 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Plasticc66/java-project-71/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Plasticc66/java-project-71/actions)
-[![Github Actions](https://github.com/Plasticc66/java-project-71/actions/workflows/github-actions-demo.yml/badge.svg)](https://github.com/Plasticc66/java-project-71/actions)
+[![Github Actions](https://github.com/Plasticc66/java-project-71/actions/workflows/github-actions.yml/badge.svg)](https://github.com/Plasticc66/java-project-71/actions)
 
 ![Screenshot 5 step](https://github.com/Plasticc66/java-project-71/blob/main/app/src/main/resources/Screenshot%205%20step%202%20project%20hexlet.png)
