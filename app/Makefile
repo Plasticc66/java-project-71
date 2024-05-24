@@ -3,3 +3,8 @@ run-dist:
 
 report:
 	./gradlew jacocoTestReport
+
+build:
+	./gradlew build
+
+.PHONY: build
